@@ -23,7 +23,7 @@ export default {
       labelPosition: "right",
       userinfo: {
         name: "admin",
-        password: "123",
+        password: "123456",
       },
       rules: {
           name: [
@@ -51,7 +51,7 @@ export default {
                 }
             }).then((res) => {
                 console.log(res)
-                if( res.status==200){
+                if( res.meta.status==200){
                     this.$message({
                         message: res.msg,
                         type: 'success',

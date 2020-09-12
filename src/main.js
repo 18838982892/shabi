@@ -10,7 +10,7 @@ Vue.use(ElementUI);
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = 'http://192.168.1.25:30001';
+axios.defaults.baseURL = 'http://192.168.1.8:8888/api/private/v1/';
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
