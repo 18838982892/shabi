@@ -1,18 +1,115 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-container>
+      <el-header>
+        
+          <!-- 头部 -->
+        <el-menu
+          default-active="activeIndex2"
+          class="el-menu-demo"
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-menu-item index="1">处理中心</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">我的工作台</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+            <el-menu-item index="2-3">选项3</el-menu-item>
+            <el-submenu index="2-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="2-4-1">选项1</el-menu-item>
+              <el-menu-item index="2-4-2">选项2</el-menu-item>
+              <el-menu-item index="2-4-3">选项3</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+          <el-menu-item index="3" disabled>消息中心</el-menu-item>
+          <el-menu-item index="4">
+            <a href="https://www.ele.me" target="_blank">订单管理</a>
+          </el-menu-item>
+        </el-menu>
+
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+            <!-- aside -->
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+            :unique-opened="uniqueopened"
+          >
+            <el-submenu :index="item.id" v-for="item in list" :key="item.id">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>{{ item.authName }}</span>
+              </template>
+              <el-menu-item-group v-for="item1 in item.children" :key="item1.id">
+                <el-menu-item index="1-1" @click="router(item1.path)">{{ item1.authName }}</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+    
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  props: {},
+  data() {
+    return {
+      list:[],
+      uniqueopened:true,
+    }
+  },
+  methods: {
+    router(v){
+      
+      this.$router.push("/home/"+v);
+    }
+  },
+  components: {},
+  mounted() {
+    this.axios({
+      url:"/sliderbar",
+      method:"get",     
+      params:{
+        token:sessionStorage.getItem("token")
+      }
+    }).then((res)=>{
+      // console.log(res);
+      this.list = res.list
+      // console.log(this.list)
+    })
+  },
+};
+</script>
+
+<style scoped lang="less">
+.home {
+  height: 100%;
+  .el-container {
+    height: 100%;
+  }
+  .el-header {
+    height: 20%;
+    padding: 0;
+  }
+  .el-container {
+    .el-aside {
+    }
   }
 }
-</script>
+</style>
+
