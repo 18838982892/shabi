@@ -107,6 +107,22 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
+  background-color:#2d3a4b;
+  .loginForm{
+    width:50%;
+    background-color:gainsboro;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+    width:400px;
+    h1{
+      text-align: center;
+      color:#2d3a4b;
+      margin-bottom: 5px;
+    }
+  }
+  .deng {
+    width: 100%;
+  }
 }
 </style>

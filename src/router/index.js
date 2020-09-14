@@ -17,7 +17,7 @@ Vue.use(VueRouter)
   {
     path: '/home',
     name: 'home',
-    component: () => import( '../views/home.vue'),
+    component: () => import( '../views/Home.vue'),
     children:[
       {
         //用户列表
@@ -67,7 +67,7 @@ Vue.use(VueRouter)
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 export default router

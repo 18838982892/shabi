@@ -1,6 +1,5 @@
 <template>
     <div>
-         <el-button type="primary">添加分类</el-button>
          <el-table
       :data="tableData"
       style="width: 100%">
