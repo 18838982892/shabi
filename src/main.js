@@ -10,21 +10,21 @@ Vue.use(ElementUI);
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = 'http://192.168.1.8:8888/api/private/v1/';
+axios.defaults.baseURL = 'http://192.168.1.13:8888/api/private/v1/';
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-  // 对响应数据做点什么
-  return response.data;
-}, function (error) {
-  // 对响应错误做点什么
-  return Promise.reject(error);
+axios.interceptors.response.use(function(response) {
+    // 对响应数据做点什么
+    return response.data;
+}, function(error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
 });
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

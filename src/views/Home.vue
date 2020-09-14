@@ -1,68 +1,65 @@
 <template>
-  <div class="home">
+<div class="home">
+  <el-container>
+    <!-- 头 -->
+    <el-header class="header">
+      <h1>电商后台管理系统</h1>
+      <button class="btn">退出</button>
+    </el-header>
+    <!-- 边 -->
     <el-container>
-      <el-header>
-        
-          <!-- 头部 -->
+      <el-aside width="200px">
+        <!-- 菜单 -->
         <el-menu
-          default-active="activeIndex2"
-          class="el-menu-demo"
-          mode="horizontal"
-          background-color="#545c64"
+          default-active="2"
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="black"
           text-color="#fff"
-          active-text-color="#ffd04b"
-        >
-          <el-menu-item index="1">处理中心</el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">我的工作台</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-            <el-menu-item index="2-3">选项3</el-menu-item>
-            <el-submenu index="2-4">
+          active-text-color="#ffd04b">
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-s-custom"></i>
+              <span>用户管理</span>
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="1-1">选项1</el-menu-item>
+              <el-menu-item index="1-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group >
+              <el-menu-item index="1-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="1-4">
               <template slot="title">选项4</template>
-              <el-menu-item index="2-4-1">选项1</el-menu-item>
-              <el-menu-item index="2-4-2">选项2</el-menu-item>
-              <el-menu-item index="2-4-3">选项3</el-menu-item>
+              <el-menu-item index="1-4-1">选项1</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="3" disabled>消息中心</el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <span slot="title">权限管理</span>
+          </el-menu-item>
+          <el-menu-item index="3">
+            <i class="el-icon-s-goods"></i>
+            <span slot="title">商品管理</span>
+          </el-menu-item>
           <el-menu-item index="4">
-            <a href="https://www.ele.me" target="_blank">订单管理</a>
+            <i class="el-icon-tickets"></i>
+            <span slot="title">订单管理</span>
+          </el-menu-item>
+          <el-menu-item index="4">
+            <i class="el-icon-data-line"></i>
+            <span slot="title">数据统计</span>
           </el-menu-item>
         </el-menu>
-
-      </el-header>
-      <el-container>
-        <el-aside width="200px">
-            <!-- aside -->
-          <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            :unique-opened="uniqueopened"
-          >
-            <el-submenu :index="item.id" v-for="item in list" :key="item.id">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>{{ item.authName }}</span>
-              </template>
-              <el-menu-item-group v-for="item1 in item.children" :key="item1.id">
-                <el-menu-item index="1-1" @click="router(item1.path)">{{ item1.authName }}</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            
-          </el-menu>
-        </el-aside>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
-      </el-container>
+      </el-aside>
+      <el-main>Main</el-main>
     </el-container>
-    
-  </div>
+  </el-container>
+</div>
 </template>
+
 
 <script>
 export default {
@@ -71,13 +68,19 @@ export default {
     return {
       list:[],
       uniqueopened:true,
+      isCollapse:true
     }
   },
   methods: {
     router(v){
-      
       this.$router.push("/home/"+v);
-    }
+    },
+    handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+    handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      }
   },
   components: {},
   mounted() {
@@ -97,19 +100,29 @@ export default {
 </script>
 
 <style scoped lang="less">
-.home {
-  height: 100%;
-  .el-container {
-    height: 100%;
+
+.home{
+  height:100%;
+  .header{
+    background-color:black;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+      .btn{
+        padding:10px 20px;
+        color:white;
+        background-color: #909399;
+        border:none;
+      }
   }
-  .el-header {
-    height: 20%;
-    padding: 0;
-  }
-  .el-container {
-    .el-aside {
+
+  .el-container{
+        height: 100%;
+        .el-menu{
+          height:100%;
+        }
     }
-  }
 }
 </style>
 

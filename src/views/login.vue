@@ -1,17 +1,20 @@
 <template>
   <div class="login">
-    <el-form 
-    :rules="rules"
-    ref="loginfrom"
-    :label-position="labelPosition" label-width="80px" :model="userinfo">
-      <el-form-item label="用户名" prop="name">
-        <el-input placeholder="请输入用户名" v-model="userinfo.name" ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input placeholder="请输入密码" v-model="userinfo.password" show-password ></el-input>
-      </el-form-item>
-      <el-button type="primary" @click="open2('loginfrom')" class="deng">登录</el-button>
-    </el-form>
+    <div class="loginForm">
+       <h1>后台管理系统</h1>
+      <el-form
+      :rules="rules"
+      ref="loginfrom"
+      :label-position="labelPosition" label-width="80px" :model="userinfo">
+        <el-form-item label="用户名" prop="name">
+          <el-input placeholder="请输入用户名" v-model="userinfo.name" ></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input placeholder="请输入密码" v-model="userinfo.password" show-password ></el-input>
+        </el-form-item>
+        <el-button type="primary" @click="open2('loginfrom')" class="deng">登录</el-button>
+      </el-form>
+     </div>
   </div>
 </template>
 
@@ -50,10 +53,10 @@ export default {
                     password:this.userinfo.password
                 }
             }).then((res) => {
-                console.log(res)
+                // console.log(res)
                 if( res.meta.status==200){
                     this.$message({
-                        message: res.msg,
+                        message: '登陆成功',
                         type: 'success',
                         duration:1000,
                         //执行完毕后得延迟
@@ -64,9 +67,9 @@ export default {
                         }
                     });
                     
-                }else if( res.status==422){
+                }else if( res.status==400){
                     this.$message({
-                        message: res.message,
+                        message: res.msg,
                         type: 'warning'
                     });
                 }
@@ -92,7 +95,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
+  background-color:#2d3a4b;
+  .loginForm{
+    width:50%;
+    background-color:gainsboro;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+    width:400px;
+    h1{
+      text-align: center;
+      color:#2d3a4b;
+      margin-bottom: 5px;
+    }
+  }
   .deng {
     width: 100%;
   }
