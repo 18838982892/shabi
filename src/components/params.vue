@@ -1,6 +1,6 @@
 <template>
-    <div class="rules">
-        <h1>我是rules</h1>
+    <div>
+
     </div>
 </template>
 
@@ -24,7 +24,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-.rules{
-    background-color: tomato;
-}
+
 </style>

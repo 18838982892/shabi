@@ -20,21 +20,47 @@ Vue.use(VueRouter)
     component: () => import( '../views/home.vue'),
     children:[
       {
-        path:'userlist',
-        component:()=>import("../components/userlist.vue")
+        //用户列表
+        path:'users',
+        component:()=>import("../components/users.vue")
       },
       {
-        path:"addUser",
-        component:()=>import("../components/adduser.vue")
+        //角色列表
+        path:"roles",
+        component:()=>import("../components/roles.vue")
       },
       {
-        path:"removeUser",
-        component:()=>import("../components/removeuser.vue")
+        //权限列表
+        path:"rights",
+        component:()=>import("../components/rights.vue")
       },
       {
-        path:"rules",
-        component:()=>import("../components/rules.vue")
+        //商品列表
+        path:"goods",
+        component:()=>import("../components/goods.vue")
+      },
+      {
+        //分类参数
+        path:"params",
+        component:()=>import("../components/params.vue")
+      },
+      {
+        //商品分类
+        path:"categories",
+        component:()=>import("../components/categories.vue")
+      },
+      {
+        //订单列表
+        path:"orders",
+        component:()=>import("../components/orders.vue")
+      },
+      {
+        //数据列表
+        path:"reports",
+        component:()=>import("../components/reports.vue")
       }
+      
+
     ]
   }
  

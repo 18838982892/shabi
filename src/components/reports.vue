@@ -1,6 +1,6 @@
 <template>
-    <div class="adduser">
-        <h1>我是adduser</h1>
+    <div>
+
     </div>
 </template>
 
@@ -24,7 +24,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-.adduser{
-    background-color: yellowgreen;
-}
+
 </style>
