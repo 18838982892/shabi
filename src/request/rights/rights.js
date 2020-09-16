@@ -5,3 +5,9 @@ export  function rights(){
         method:"get",
     })
 }
+export function righttree(){
+    return req({
+        url:`/rights/tree`,
+        method:"get",
+    })
+}
