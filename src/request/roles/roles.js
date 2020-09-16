@@ -5,3 +5,10 @@ export  function roles(){
         method:"get",
     })
 }
+export function chanrole(roleId,right){
+    return req({
+        url:`/roles/${roleId}/${right}`,
+        method:"post",
+
+    })
+}
