@@ -2,13 +2,14 @@
     <div>
         <div class="fl" style="margin-top: 15px">
             <div class="flo">
-            <el-input placeholder="请输入内容" v-model="input2">
+            <el-input placeholder="请输入内容"  v-model="getinfo.query">
                 <template slot="append" >
-                  <el-button type="primary" icon="el-icon-search"></el-button>
+                  <el-button type="primary" icon="el-icon-search" @click="goodss"></el-button>
                 </template>
             </el-input>
             </div>
-            <el-button type="primary" class="flo" style="margin-left: 15px" @click="sho">添加商品</el-button>
+            <el-button type="primary" class="flo" style="margin-left: 15px" @click="sho">添加商品
+            </el-button>
         </div>
               <el-table v-if="show"
     :data="tableData"
@@ -35,33 +36,37 @@
       width="150">
     </el-table-column>
     <el-table-column
-      prop="roleDesc"
+      prop="add_time"
       label="创建时间"
       width="150">
+      <!-- 格式化时间 -->
+      <template slot-scope="scope">
+        {{scope.row.add_time | dateFormat}}
+      </template>
     </el-table-column>
 
      <el-table-column
       prop="address"
       label="操作"
       width="150">
-      <template>
+      <template slot-scope="scope" >
         <el-button type="primary" icon="el-icon-edit"></el-button>
-        <el-button type="primary" icon="el-icon-delete"></el-button>
+        <el-button type="primary" icon="el-icon-delete" @click="removeGoodsId(scope.row.goods_id)"></el-button>
      </template>
     </el-table-column>
-</el-table>
-<div v-else>
+            </el-table>
+            <div v-else>
 
-  <el-steps :active="active" finish-status="success" v->
-  <el-step title="基本信息"></el-step>
-  <el-step title="商品参数"></el-step>
-  <el-step title="商品属性"></el-step>
-  <el-step title="商品图片"></el-step>
-  <el-step title="商品内容"></el-step>
-  <el-step title="商品完成"></el-step>
-  </el-steps>
-<el-button style="margin-top: 12px;" @click="next">下一步</el-button>
-</div>
+              <el-steps :active="active" finish-status="success" v->
+              <el-step title="基本信息"></el-step>
+              <el-step title="商品参数"></el-step>
+              <el-step title="商品属性"></el-step>
+              <el-step title="商品图片"></el-step>
+              <el-step title="商品内容"></el-step>
+              <el-step title="商品完成"></el-step>
+              </el-steps>
+            <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+            </div>
 
 
 
@@ -69,7 +74,7 @@
 </template>
 
 <script>
-import {goods} from "../request/good/good"
+import {goods,goodsDelete} from "../request/good/good"
 export default {
     props: {
 
@@ -79,27 +84,48 @@ export default {
             tableData:[],
             show:true,
             active: 0,
-            input2:''
-        };
+            query:'',
+            getinfo:{
+              pagenum: 1,
+              pagesize: 10,
+              query: '',
+            }
+        }
     },
+    // created () {
+    //   this.getGoodList();
+    // },
     methods: {
         next() {
           if (this.active++ > 2) this.active = 0;
         },
         sho(){
           this.show=!this.show
+        },
+        //删除商品
+        removeGoodsId(id){
+         goodsDelete(id).then((res)=>{
+           console.log(res);
+           this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+         })
+        },
+        goodss(){
+          goods().then((res)=>{
+            this.tableData=res.data.goods
+            console.log(res);
+           })
         }
-    },
+   },
     components: {
 
     },
     mounted() {
-        goods().then((res)=>{
-            this.tableData=res.data.goods
-            console.log(res);
-        })
-    },
-};
+        this.goodss();
+    }
+}
 </script>
 
 <style scoped lang="less">

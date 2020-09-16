@@ -32,7 +32,7 @@
       width="300">
       <template>
         <el-button  type="text" size="small"> 编辑 </el-button>
-        <el-button type="text"  size="small">移除</el-button>
+        <el-button type="text"  size="small" >移除</el-button>
         <el-button type="text"  size="small">分配权限</el-button>
       </template>
     </el-table-column>
