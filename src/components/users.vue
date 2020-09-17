@@ -11,6 +11,7 @@
 <el-button type="primary" class="flo" style="margin-left: 15px"  @click="dialogFormVisible = true">添加用户</el-button>
 </div>
 
+<!-- 添加用户 -->
 <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
   <el-form :model="form">
     <el-form-item label="用户名" :label-width="formLabelWidth">
@@ -31,7 +32,6 @@
     <el-button type="primary" @click="sub">确 定</el-button>
   </div>
 </el-dialog>
-
 
 
 
@@ -97,7 +97,7 @@
     </el-table-column>
 </el-table>
 
-
+<!-- 修改 -->
 <el-dialog title="修改用户" :visible.sync="chan">
   <el-form :model="form1">
     <el-form-item label="用户名" :label-width="formLabelWidth">
@@ -116,7 +116,7 @@
   </div>
 </el-dialog>
 
-
+<!-- 分配角色 -->
 <el-dialog title="分配角色" :visible.sync="chan1">
   <el-form :model="form2">
     <el-form-item label="当前的用户" :label-width="formLabelWidth">
@@ -140,7 +140,7 @@
   </div>
 </el-dialog>
 
-
+<!-- 分页器 -->
 <div class="block">
     <el-pagination
       :page-sizes="[1, 2, 3, 4]"
@@ -155,8 +155,8 @@
 </template>
 
 <script>
-import {users,userid,userchange,user1,getinfo,change} from "../request/user/users"
-
+import {users,userid,userchange,user1,getinfo,change,fenpei} from "../request/user/users"
+import {addjiao} from "../request/roles/roles"
 export default {
     props: {
 
@@ -197,6 +197,9 @@ export default {
           total:0,
           //修改的id
           id:"",
+          //保存分配角色所需要得用户id 和角色id
+          useeid:"",
+          roleid:""
         };
     },
     
@@ -284,15 +287,34 @@ export default {
         })
         
       },
-      //分配角色
+      //分配角色  需要 c是用户id 和角色id  先走获取角色id  
+      // 添加角色  传递参数角色名称 a是角色名称 获取返回值得 角色id  再传递过去
       fen(a,b,c){
         console.log(a,b,c)
+        this.userid = c
         this.form2.username = a;
         this.form2.rolename = b;
+        let d = {
+            roleName: a
+        }
+        //点击添加角色时  保存返回得角色id  
+        addjiao(d).then((res)=>{
+          console.log(res);
+          this.roleid=res.data.roleId
+        })
         this.chan1= true
       },
+      //点击确认时 进行 分配角色得请求  传递 用户id 和角色 id
       fa1(){
-        this.chan1=false
+        let userid1 = this.userid
+        let roleid1 = this.roleid
+        console.log(userid1)
+        console.log(roleid1 )
+        // fenpei(userid1,roleid1).then((res)=>{
+        //   console.log(res);
+        //   this.chan1=false
+        // })
+        
       },
       // 顺序排列
       indexMethod(index) {

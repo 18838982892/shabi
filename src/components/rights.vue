@@ -19,11 +19,21 @@
       label="路径"
       width="300">
     </el-table-column>
+
     <el-table-column
       prop="level"
       label="权限等级"
-      width="300">
+      width="300"
+      :filters="[{ text: '一级', value: '0' }, { text: '二级', value: '1' }]"
+      filter-placement="bottom-end">
+      <template slot-scope="scope">
+        <el-tag
+          :type="scope.row.level === '0' ? 'primary' : 'success'"
+          disable-transitions>{{scope.row.level}}
+        </el-tag>
+      </template>
     </el-table-column>
+
   </el-table>
     </div>
 </template>
@@ -40,7 +50,7 @@ export default {
         };
     },
     methods: {
-
+       
     },
     components: {
 
