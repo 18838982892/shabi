@@ -55,6 +55,9 @@
     </el-table-column>
 </el-table>
 
+<<<<<<< HEAD
+    
+=======
 <!-- 修改 -->
 <el-dialog title="修改用户" :visible.sync="chan">
   <el-form :model="form1">
@@ -94,8 +97,10 @@
 </div>
 </el-dialog>
 
+>>>>>>> a478217ef5e84dac0dd1f9d861e992b4cbdb01cc
 
     </div>
+    
 </template>
 
 <script>

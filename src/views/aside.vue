@@ -1,12 +1,7 @@
 <template>
     <div>
-      
-        <el-aside width="200px">
-            <!-- aside -->
-          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-          <el-radio-button :label="false">展开</el-radio-button>
-          <el-radio-button :label="true">收起</el-radio-button>
-          </el-radio-group>
+        <el-aside :width="isCollapse ? '65px':'200px'">
+          <div class="toggle-button" @click="toggleCollapse">|||</div>
           <el-menu
             default-active="2"
             class="el-menu-vertical-demo"
@@ -15,6 +10,7 @@
             active-text-color="#ffd04b"
             :unique-opened="uniqueopened"
             @open="handleOpen" @close="handleClose" :collapse="isCollapse"
+            collapse-transition="false"
           >
             <el-submenu :index="item.id+'' " v-for="item in list" :key="item.id">
               <template slot="title">
@@ -42,7 +38,7 @@ export default {
         return {
             list:[],
             uniqueopened:true,
-            isCollapse: true
+            isCollapse: false
         };
     },
     methods: {
@@ -54,6 +50,10 @@ export default {
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      //点击按钮  切换菜单
+      toggleCollapse(){
+          this.isCollapse = ! this.isCollapse
       }
     },
     components: {
@@ -69,5 +69,23 @@ export default {
 </script>
 
 <style scoped lang="less">
+ .el-container{
+    height: 100%;
+    .Aside{
+      height:100%;
+    }
+    .toggle-button{
+      background-color: #4A5064;
+      line-height: 24px;
+      height:24px;
+      text-align: center;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      color:white;
+    }
+}
 
+.home{
+  height:100px;
+}
 </style>

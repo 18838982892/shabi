@@ -46,7 +46,8 @@ export default {
   margin: 0;
   padding: 0;
 }
-.el-header{
+.home{
+  .el-header{
   .el-menu{
     background-color: #545C64;
     color: white;
@@ -54,7 +55,7 @@ export default {
     line-height: 60px;
     font-size: 30px;
   }
-    
+}
 }
 </style>
 
