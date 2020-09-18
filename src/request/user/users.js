@@ -48,3 +48,11 @@ export function change(id,email,mobile){
         
     })
 }
+//分配用户角色
+export function fenpei(id,roleid){
+    return req({
+        url:`/users/${id}/role`,
+        method:"put",
+        data:roleid
+    })
+}
