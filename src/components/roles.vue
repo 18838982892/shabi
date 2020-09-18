@@ -31,19 +31,11 @@
      <el-table-column
       prop="address"
       label="操作"
-<<<<<<< HEAD
-      width="300">
-      <template>
-        <el-button  type="text" size="small"> 编辑 </el-button>
-        <el-button type="text"  size="small" >移除</el-button>
-        <el-button type="text"  size="small">分配权限</el-button>
-=======
       width="400">
        <template slot-scope="scope">
         <el-button type="primary" icon="el-icon-edit" @click="getin(scope.row.id)" >编辑</el-button>
         <el-button type="warning" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button>
         <el-button type="danger" icon="el-icon-s-tools" @click="fen(scope.row.id)">分配权限</el-button>
->>>>>>> 8e2c15b76f59d0c21e15300a1d2fb294cf585cf6
       </template>
     </el-table-column>
 </el-table>

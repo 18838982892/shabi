@@ -29,7 +29,7 @@
       width="150">
     </el-table-column>
      <el-table-column
-      prop="goods_weight"
+      prop="pay_status"
       label="是否付款"
       width="150">
     </el-table-column>
@@ -55,7 +55,10 @@
     </el-table-column>
 </el-table>
 
+    
+
     </div>
+    
 </template>
 
 <script>
