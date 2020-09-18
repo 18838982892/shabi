@@ -137,7 +137,6 @@ export default {
               label: 'authName'
             },
 
-          dialogTableVisible: false,
           dialogFormVisible: false,
           formLabelWidth: '120px',
           //添加用户
@@ -164,7 +163,6 @@ export default {
       fen(v){
         //保存id
         this.id=v
-
         righttree().then((res)=>{
           this.data1 = res.data
           this.show = true
@@ -174,7 +172,7 @@ export default {
       //提交
       sub(){
           let key = this.$refs.tree.getCheckedKeys() //key就是树状图的参数  就是权限id
-          let key1 =  key.join('')
+          let key1 =  key.join(',')
           //点击提交时  把id传递 过来  还需要一个权限id
           let id =this.id;
           console.log(id);

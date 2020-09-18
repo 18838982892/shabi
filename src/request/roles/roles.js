@@ -11,7 +11,9 @@ export function chanrole(roleId,rid){
     return req({
         url:`/roles/${roleId}/rights`,
         method:"post",
-        data:rid
+        data:{
+            rids:rid
+        }
     })
 }
 //删除角色
