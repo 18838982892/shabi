@@ -21,11 +21,6 @@
   </div>
 </el-dialog>
 
-
-
-<!-- <el-tree :data="tableData" :props="defaultProps" @node-click="handleNodeClick">
-
-</el-tree> -->
       <el-table
       :data="tableData"
       style="width: 100%"
@@ -34,7 +29,7 @@
       >
 
       <el-table-column
-        
+        type="index"
         label="#"
         width="100"
         >

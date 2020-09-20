@@ -1,5 +1,5 @@
 <template>
-    <div class="max">
+    <div class="max big">
         <div class="fl" style="margin-top: 15px">
             <div class="flo">
             <el-input placeholder="请输入内容"  v-model="god.query">
@@ -12,18 +12,20 @@
             </el-button>
         </div>
               <el-table v-if="show"
+              
     :data="tableData"
     border
     style="width: 100%">
     <el-table-column
       prop="goods_id"
       label="#"
-      width="50">
+      width="50"
+      type="index">
     </el-table-column>
     <el-table-column
       prop="goods_name"
       label="商品名称"
-      width="500">
+      width="300">
     </el-table-column>
     <el-table-column
       prop="goods_price"
@@ -55,24 +57,13 @@
      </template>
      
     </el-table-column>
-            </el-table>
-            <div v-else >
+      </el-table>
 
-              <div class="add">
-                <i class="el-icon-info"></i>
-                添加商品</div>
-              <el-steps :active="active" finish-status="success" v->
-          
-              <el-step title="基本信息"></el-step>
-              <el-step title="商品参数">
-              </el-step>  
-              <el-step title="商品属性"></el-step>
-              <el-step title="商品图片"></el-step>
-              <el-step title="商品内容"></el-step>
-              <el-step title="商品完成"></el-step>
-              </el-steps>
-            <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
-            </div>
+  <div v-else >
+
+              <Add></Add>         
+      <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+  </div>
 </div>
 
 
@@ -83,6 +74,7 @@
 
 <script>
 import {goods,goodsDelete,goodsSelect,godsCompile} from "../request/good/good"
+import Add from "./Addgoods"
 export default {
     props: {
 
@@ -159,7 +151,7 @@ export default {
         }
    },
     components: {
-
+      Add,
     },
     mounted() {
         this.goodss();
@@ -168,6 +160,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+.big{
+  width: 950px;
+}
 .fl{
     overflow: hidden;
     .flo{
@@ -175,7 +170,7 @@ export default {
     } 
   .max{
       width:100%;
-        .add{
+      .add{
       width:100%;
       background-color: #909399;
     }

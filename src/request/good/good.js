@@ -43,3 +43,19 @@ export function godsCompile(goods_name, goods_price, goods_number, goods_weight,
         }
     })
 }
+
+
+export function add(info){
+    return req({
+      url:'/goods',
+      method:"post",
+      data:info
+    })
+  }
+  export function add1(){
+    return req({
+      url:'/categories',
+      method:"get",
+  
+    })
+  }
