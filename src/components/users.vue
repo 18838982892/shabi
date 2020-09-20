@@ -33,8 +33,6 @@
   </div>
 </el-dialog>
 
-
-
 <el-table
     :data="tableData"
     style="width: 100%"
@@ -42,7 +40,6 @@
     >
     <el-table-column
       type="index"
-      :index="indexMethod"
       fixed
       prop="id"
       label="#"
@@ -143,8 +140,11 @@
 <!-- 分页器 -->
 <div class="block">
     <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
       :page-sizes="[1, 2, 3, 4]"
-      :page-size="zhang.pagesize"
+      :current-page="zhang.pagenum"
+      :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
@@ -191,7 +191,7 @@ export default {
           //分页
           zhang:{
             pagenum:1,
-            pagesize:20,
+            pagesize:2,
             query:'',
           },
           total:0,
@@ -204,6 +204,28 @@ export default {
     },
     
     methods: {
+      //封装的自动获取函数
+      get(){
+        let zhan = this.zhang
+        users(zhan).then((res)=>{
+        this.tableData = res.data.users
+        this.total = res.data.total
+        // this.zhang.pagenum = res.data.pagenum
+        // console.log( this.zhang.pagenum )
+          
+        })
+      },
+     // 每页数
+    handleSizeChange(val) {
+      this.zhang.pagesize = val;
+      this.zhang.pagenum = 1;
+      this.get();
+    },
+    // 当前页
+    handleCurrentChange(val) {
+      this.zhang.pagenum = val;
+      this.get();
+    },
       //搜索用户
       search(){
           let zhan = this.zhang
@@ -211,6 +233,7 @@ export default {
           users(zhan).then((res)=>{
             console.log(res);
             this.tableData = res.data.users
+            this.info11(res);
           })
       },
       // 添加用户
@@ -220,12 +243,9 @@ export default {
         //添加请求
         user1(info).then((res)=>{
           // console.log(res);
-           this.$message({
-            showClose: true,
-            message: "添加用户成功",
-            type: 'success'
-            });
-        })
+           this.info11(res);
+           this.get()
+        })  
       },
       //编辑用户信息 先获取用户信息
       getin(v){
@@ -246,11 +266,8 @@ export default {
           console.log( id,email,mobile)
           change(id,email,mobile).then((res)=>{
             console.log(res);
-             this.$message({
-              showClose: true,
-              message: res.meta.msg,
-              type: 'success'
-            });
+            this.info11(res);
+            this.get()
           })
           this.chan=false 
       },
@@ -262,11 +279,12 @@ export default {
           type: 'warning'
         }).then(() => {
           //删除的请求
-          userid(v).then((res)=>{ })
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          userid(v).then((res)=>{ 
+            console.log(res);
+            this.info11(res);
+            this.get()
+          })
+         
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -279,11 +297,8 @@ export default {
       open2(uld,type) {
         userchange(uld,type).then((res)=>{
           console.log(res);
-          this.$message({
-            showClose: true,
-            message: res.meta.msg,
-            type: 'success'
-          });
+          this.info11(res);
+          this.get()
         })
         
       },
@@ -316,22 +331,22 @@ export default {
         // })
         
       },
-      // 顺序排列
-      indexMethod(index) {
-        return ++index;
-      },
       
+      //信息提示
+      info11(res){
+          this.$message({
+          showClose: true,
+          message: res.meta.msg,
+          type: 'success'
+          });
+      }
     },
     components: {
 
     },
     mounted() {
-      let zhan = this.zhang
-       users(zhan).then((res)=>{
-        this.tableData = res.data.users
-        this.total = res.data.total
-        console.log(res);
-      })
+      //获取列表
+      this.get()
     },
 };
 </script>

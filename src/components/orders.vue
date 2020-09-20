@@ -16,7 +16,8 @@
     <el-table-column
       prop="order_id"
       label="#"
-      width="50">
+      width="50"
+      type="index">
     </el-table-column>
     <el-table-column
       prop="order_number"
@@ -32,6 +33,11 @@
       prop="pay_status"
       label="是否付款"
       width="150">
+      <template slot-scope="scope">
+        <el-tag v-if="scope.row.pay_status=='0' " type="danger">未付款 </el-tag>
+        <el-tag v-if="scope.row.pay_status=='1' " type="danger">已付款 </el-tag>
+      </template>
+
     </el-table-column>
     <el-table-column
       prop="is_send"
@@ -55,9 +61,6 @@
     </el-table-column>
 </el-table>
 
-<<<<<<< HEAD
-    
-=======
 <!-- 修改 -->
 <el-dialog title="修改用户" :visible.sync="chan">
   <el-form :model="form1">
@@ -97,7 +100,6 @@
 </div>
 </el-dialog>
 
->>>>>>> a478217ef5e84dac0dd1f9d861e992b4cbdb01cc
 
     </div>
     
@@ -111,14 +113,14 @@ export default {
     },
     data() {
         return {
-            tableData:[],
-            //请求传递得参数
-            info:{
+          tableData:[],
+          //请求传递得参数
+          info:{
               query:'',
               pagenum:1,
               pagesize:100
-            },
-            //修改用户
+          },
+          //修改用户
           formLabelWidth: '120px',
           chan: false,
           form1 :{
@@ -131,7 +133,23 @@ export default {
         };
     },
     methods: {
-      //搜索
+      //信息提示
+     info11(res){
+          this.$message({
+              showClose: true,
+              message: res.meta.msg,
+              type: 'success'
+          });
+      },
+      //实时更新数据
+      get(){
+        let info = this.info
+        orders(info).then((res)=>{
+            this.tableData=res.data.goods
+            console.log(res);
+        })
+      },
+      //搜索 查询订单详情
       search(){
           let sou = this.info.query
           this.tableData=[] //清空 数组
@@ -139,9 +157,10 @@ export default {
             console.log(res);
             //把对象push到数组中
             this.tableData.push(res.data)
+            this.info11(res);
         })
       },
-      //修改
+      //修改位置
       getin(v){
           this.chan=true;
           console.log(v)
@@ -153,6 +172,7 @@ export default {
       kuadi(){
         kuaidi('1106975712662').then((res)=>{
           console.log(res);
+          this.info11(res);
           this.activities = res.data
           this.dialogVisible = true
           console.log( this.activities )
@@ -163,11 +183,7 @@ export default {
 
     },
     mounted() {
-        let info = this.info
-        orders(info).then((res)=>{
-            this.tableData=res.data.goods
-            console.log(res);
-        })
+        this.get()
     },
 };
 </script>

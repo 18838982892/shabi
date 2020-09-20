@@ -1,5 +1,6 @@
 <template>
     <div class="params">
+<!-- 选择商品分类 -->
         <el-alert
     title="注意：只允许为第三级分类设置相关参数！"
     type="warning"
@@ -15,7 +16,7 @@
     @change="handleChange"></el-cascader>
 </div>
 
-
+<!-- 参数排列 -->
 <el-tabs  v-model="activeName" >
     <el-tab-pane label="动态参数" name="many">
         <el-button type="primary" @click="dialogFormVisible = true">添加参数</el-button>
@@ -102,7 +103,7 @@
       label="#"
       width="100"
        type="index"
-      :index="indexMethod">
+      >
     </el-table-column>
     <el-table-column
       prop="attr_name"
@@ -163,46 +164,44 @@ export default {
         };
     },
     methods: {
-        //分类 选择框  value就是分类id  
-        handleChange(value) {
-        console.log(value);
-        this.id =value
+      //信息展示
+      info11(res){
+         this.$message({
+              type: 'success',
+              message: res.meta.msg
+          });
+      },
+      //更新数据
+      get(){
+          let sel =[this.activeName]
+          parsms(this.id,sel).then((res)=>{
+              console.log(res);
+              this.tableData = res.data
+              this.info11(res);
+          })
+      },
+        //分类 选择框  value就是分类id  选择过后  把分类id 赋给data中的 请求页面时使用id
+      handleChange(value) {
+        this.id =value[value.length-1]
         console.log( this.activeName )
-        let sel =[this.activeName]
-            parsms(value,sel).then((res)=>{
-                console.log(res);
-                this.tableData = res.data
-                this.$message({
-                    type: 'success',
-                    message: res.meta.msg
-                });
-            })
-        },
+        this.get()
+      },
         //添加动态属性
         add1(){
             // this.id 是分类id  this.from.参数 是 参数名称  this.activeName是类型
             console.log( this.form.canshu,this.id,this.activeName )
             addpar(this.id,this.form.canshu,this.activeName).then((res)=>{
-                // console.log(res);
-                // this.tableData =res.data
                 this.dialogFormVisible=false
-                this.$message({
-                    type: 'success',
-                    message: res.meta.msg
-                });
+                this.info11(res);
+                this.get()
             })
         },
         //添加静态属性 修改 参数属性和类型
         add2(){
             addpar(this.id,this.form1.canshu1,this.activeName).then((res)=>{
-                // console.log(res);
-                // this.tableData =res.data
                 this.dialogFormVisibl=false
-                this.$message({
-                    type: 'success',
-                    message: res.meta.msg
-                });
-                 
+                this.info11(res);
+                this.get()
             })
         },
         //删除 属性 v是参数id
@@ -216,11 +215,9 @@ export default {
                 // console.log(v);
                 delpar(this.id,v).then((res)=>{
                     console.log(res);
-                    this.$message({
-                    type: 'success',
-                    message: res.meta.msg
-                })
-            });
+                    this.info11(res);
+                    this.get()
+              });
             }).catch(() => {
             this.$message({
             type: 'info',
@@ -245,20 +242,11 @@ export default {
             console.log( info.attr_sel )
             bianji(this.id,this.shuxingid,info).then((res)=>{
                 console.log(res);
-                this.$message({
-                    type: 'success',
-                    message: res.meta.msg
-                })
+                this.info11(res);
+                this.get()
                 this.dialogFormVisib=false
             })
         },
-
-
-
-        // 顺序排列
-      indexMethod(index) {
-        return ++index;
-      },
     },
     components: {
        

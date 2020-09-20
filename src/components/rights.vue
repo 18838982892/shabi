@@ -7,7 +7,8 @@
     <el-table-column
       prop="id"
       label="#"
-      width="50">
+      width="50"
+      type="index">
     </el-table-column>
     <el-table-column
       prop="authName"
@@ -19,7 +20,6 @@
       label="路径"
       width="300">
     </el-table-column>
-
     <el-table-column
       prop="level"
       label="权限等级"
@@ -27,10 +27,10 @@
       :filters="[{ text: '一级', value: '0' }, { text: '二级', value: '1' }]"
       filter-placement="bottom-end">
       <template slot-scope="scope">
-        <el-tag
-          :type="scope.row.level === '0' ? 'primary' : 'success'"
-          disable-transitions>{{scope.row.level}}
-        </el-tag>
+        <el-tag v-if="scope.row.level=='0' ">一级 </el-tag>
+        <el-tag v-if="scope.row.level=='1' " type="success">二级 </el-tag>
+        <el-tag v-if="scope.row.level=='2' " type="warning">三级 </el-tag>
+       
       </template>
     </el-table-column>
 
@@ -53,7 +53,6 @@ export default {
        
     },
     components: {
-
     },
     mounted() {
         rights().then((res)=>{

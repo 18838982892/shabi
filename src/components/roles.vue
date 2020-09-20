@@ -55,7 +55,7 @@
       label="#"
       width="100"
        type="index"
-      :index="indexMethod">
+      >
     </el-table-column>
     <el-table-column
       prop="roleName"
@@ -159,6 +159,21 @@ export default {
         };
     },
     methods: {
+      //信息提示
+      info11(res){
+          this.$message({
+            showClose: true,
+            message: res.meta.msg,
+            type: 'success'
+          });
+      },
+      //封装的roles数据请求方法
+      get(){
+         roles().then((res)=>{
+            this.tableData =res.data
+            console.log(res);
+        })
+      },
       //分配权限  获取需要的权限的内容  v是角色id  未获取到权限id
       fen(v){
         //保存id
@@ -180,13 +195,9 @@ export default {
           chanrole(id,key1).then((res)=>{
             console.log(res);
             this.show= false
-            this.$message({
-            showClose: true,
-            message: res.meta.msg,
-            type: 'success'
-            });
+            this.info11(res);
+            this.get()
           })
-        
       },
       //删除角色
       del(v) {
@@ -198,35 +209,25 @@ export default {
           //删除的请求
           dell(v).then((res)=>{
           console.log(res);
-          this.$message({
-            showClose: true,
-            message: res.meta.msg,
-            type: 'success'
-          });
-        })
+          this.info11(res);
+           this.get()
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });          
-        });
-       
+        });   
       },
       //增加角色  可以获取到角色id  
       add(){
         let info = this.form
         addjiao(info).then((res)=>{
           console.log(res);
-          // this.roleId = res.data.roleId
-
-          // console.log( this.roleId )
-          this.$message({
-            showClose: true,
-            message: res.meta.msg,
-            type: 'success'
-          });
+          this.info11(res);
           this.dialogFormVisible=false
-        })
+          this.get()
+        }) 
       },
       //编辑  先获取   v是用户id
       getin(v){
@@ -247,13 +248,11 @@ export default {
         let roleDesc = this.form1.roleDesc
         chan1(id,roleName,roleDesc).then((res)=>{
           console.log(res);
-          this.$message({
-            showClose: true,
-            message:"修改成功",
-            type: 'success'
-          });
+          this.info11(res);
           this.chan = false
+          this.get()
         })
+       
       } , 
       //取消单个权限 a是角色id v是 权限id
       fn(a,v){
@@ -265,13 +264,10 @@ export default {
         }).then(() => {
           //删除单个权限
           delone(a,v).then((res)=>{
-          console.log(res);
-           this.$message({
-            showClose: true,
-            message:res.meta.msg,
-            type: 'success'
-          });
-        })
+            console.log(res);
+            this.info11(res);
+            this.get()
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -280,19 +276,12 @@ export default {
         });
        
       },
-           // 顺序排列
-      indexMethod(index) {
-        return ++index;
-      },
     },
     components: {
 
     },
     mounted() {
-        roles().then((res)=>{
-            this.tableData =res.data
-            console.log(res);
-        })
+       this.get()
     },
 };
 </script>

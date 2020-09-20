@@ -18,7 +18,7 @@ export  function addfenlei(info1){
 //根据id查询分类
 export  function search(id){
     return req({
-        url:`/categories${id}`,
+        url:`/categories/${id}`,
         method:"get"
     })
 }

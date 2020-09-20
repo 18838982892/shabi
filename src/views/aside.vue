@@ -10,7 +10,7 @@
             active-text-color="#ffd04b"
             :unique-opened="uniqueopened"
             @open="handleOpen" @close="handleClose" :collapse="isCollapse"
-            collapse-transition="false"
+            
           >
             <el-submenu :index="item.id+'' " v-for="item in list" :key="item.id">
               <template slot="title">

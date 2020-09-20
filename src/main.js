@@ -11,9 +11,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
-    //引入  echarts
-    // import echarts from 'echarts'
-    // Vue.prototype.$echarts = echarts
+    // 引入  echarts
+    import echarts from 'echarts'
+    Vue.prototype.$echarts = echarts
 
 //格式化时间
 Vue.filter('dateFormat', function(originVal) {
