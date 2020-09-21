@@ -1,12 +1,9 @@
 import req from "../index"
-export function goods() {
+export function goods(info) {
     return req({
         url: "/goods",
         method: "get",
-        params: {
-            pagenum: 1,
-            pagesize: 10,
-        }
+        params: info
     })
 }
 

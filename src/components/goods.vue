@@ -52,7 +52,7 @@
       label="操作"
       width="150">
       <template slot-scope="scope" >
-        <el-button type="primary" icon="el-icon-edit" @click="goodsCompile"></el-button>
+        <el-button type="primary" icon="el-icon-edit" @click="goodsCompileId(scope.row.goods_id)"></el-button>
         <el-button type="primary" icon="el-icon-delete" @click="removeGoodsId(scope.row.goods_id)"></el-button>
      </template>
      
@@ -64,9 +64,23 @@
               <Add></Add>         
       <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
   </div>
+
+<!-- 分页器 -->
+<div class="block">
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :page-sizes="[1, 2, 3, 4]"
+      :current-page="god.pagenum"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
 </div>
 
 
+
+</div>
 </template>
 
 
@@ -90,6 +104,7 @@ export default {
               pagenum:1,
               pagesize:10
             },
+            total:0,
             Compiled:false,
             //编辑商品
             Compile:{
@@ -104,6 +119,19 @@ export default {
         }
     },
     methods: {
+
+
+       // 每页数
+    handleSizeChange(val) {
+      this.god.pagesize = val;
+      this.god.pagenum = 1;
+      this.goodss();
+    },
+    // 当前页
+    handleCurrentChange(val) {
+      this.god.pagenum = val;
+      this.goodss();
+    },
         next() {
           if (this.active++ > 2) this.active = 0;
         },
@@ -132,8 +160,9 @@ export default {
         },
         //列表商品
         goodss(){
-          goods().then((res)=>{
+          goods(this.god).then((res)=>{
             this.tableData=res.data.goods
+            this.total = res.data.total
             // console.log(res);
            })
         },
@@ -146,9 +175,16 @@ export default {
           })
         },
         //编辑商品信息
-        goodsCompile(){
-          
-        }
+       goodsCompileId(v){
+           this.dialogFormVisible = true;
+           console.log(v); 
+           goodsSelectId(v).then((res) =>{
+             console.log(res);  
+             this.form.name = res.data.goods_name,
+             this.form.price = res.data.goods_price,
+             this.form.weight = res.data.goods_weight
+           })
+        },
    },
     components: {
       Add,
